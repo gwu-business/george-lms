@@ -21,7 +21,7 @@ Download Detailed Class List
  * Select a *Course*. Submit selection.
  * View *Detail Faculty Class List*, and download source (html-only).
 
-> This should produce a file in the corresponding course directory: terms/`:term_id`/courses/`:course_id`/sections/`:section_id`/lists/class_details.html
+> This should produce a file for each course in the corresponding course directory: terms/`:term_id`/courses/`:course_id`/sections/`:section_id`/lists/class_details.html
 
 Download Summary Class List
 
@@ -32,7 +32,7 @@ Download Summary Class List
  + Select a *Course*. Submit selection.
  + View *Summary Faculty Class List*, and download source (html-only).
 
-> This should produce a file in the corresponding course directory: terms/`:term_id`/courses/`:course_id`/sections/`:section_id`/lists/class_summary.html
+> This should produce a file for each course in the corresponding course directory: terms/`:term_id`/courses/`:course_id`/sections/`:section_id`/lists/class_summary.html
 
 Run the Roster Creation Script
 
@@ -40,12 +40,10 @@ Run the Roster Creation Script
 ruby roster_creator.rb
 ````
 
-> This should produce a file in the corresponding course directory: terms/`:term_id`/courses/`:course_id`/sections/`:section_id`/roster.csv and should also store a version of the roster for archival: terms/`:term_id`/courses/`:course_id`/sections/`:section_id`/rosters/roster_`YYYY-MM-DD`.csv
+> This should produce a file for each course in the corresponding course directory: terms/`:term_id`/courses/`:course_id`/sections/`:section_id`/roster.csv and should also store a version of the roster for archival: terms/`:term_id`/courses/`:course_id`/sections/`:section_id`/rosters/roster_`YYYY-MM-DD`.csv
 
 ## Contributing
 
 todo
 
-## License
-
-MIT
+## [License](LICENSE)
