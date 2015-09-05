@@ -1,4 +1,5 @@
 .DS_Store
-summary_faculty_class_list.html
-summary_faculty_class_list.csv
+schedule_details.html
+class_summary.html
+class_details.html
 roster.csv
