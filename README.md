@@ -44,6 +44,12 @@ ruby lib/generate_rosters.rb
 
 ## Contributing
 
-todo
+### Testing
+
+To test the roster-generation script, run:
+
+```` sh
+ruby test/generate_rosters_test.rb
+````
 
 ## [License](LICENSE)
