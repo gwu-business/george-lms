@@ -21,7 +21,7 @@ Download Detailed Class List
  * Select a *Course*. Submit selection.
  * View *Detail Faculty Class List*, and download source (html-only).
 
-> This should produce a file for each course in the corresponding course directory: terms/`:term_id`/courses/`:course_id`/sections/`:section_id`/lists/class_details.html
+> Save as: terms/`:term_id`/courses/`:course_id`/sections/`:section_id`/lists/class_details.html
 
 Download Summary Class List
 
@@ -32,7 +32,7 @@ Download Summary Class List
  + Select a *Course*. Submit selection.
  + View *Summary Faculty Class List*, and download source (html-only).
 
-> This should produce a file for each course in the corresponding course directory: terms/`:term_id`/courses/`:course_id`/sections/`:section_id`/lists/class_summary.html
+> Save as: terms/`:term_id`/courses/`:course_id`/sections/`:section_id`/lists/class_summary.html
 
 Run the Roster Generation Script
 
@@ -40,9 +40,22 @@ Run the Roster Generation Script
 ruby lib/generate_rosters.rb
 ````
 
-> This should produce a file for each course in the corresponding course directory: terms/`:term_id`/courses/`:course_id`/sections/`:section_id`/roster.csv and should also store a version of the roster for archival: terms/`:term_id`/courses/`:course_id`/sections/`:section_id`/rosters/roster_`YYYY-MM-DD`.csv
+> This should produce a file for each course in the corresponding course directory: terms/`:term_id`/courses/`:course_id`/sections/`:section_id`/roster.csv
 
 ## Contributing
+
+To setup a development environment:
+ + install git
+ + install ruby
+ + install bundler
+
+Then clone this repository and install ruby package dependences:
+
+```` sh
+git clone git@github.com:gwu-business/george-lms.git
+cd george-lms/
+bundle install
+````
 
 ### Testing
 

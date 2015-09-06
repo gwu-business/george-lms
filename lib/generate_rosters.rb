@@ -18,7 +18,7 @@
 require 'pry'
 require 'json'
 #require 'open-uri'
-#require 'nokogiri'
+require 'nokogiri'
 #require 'csv'
 
 module George
@@ -98,12 +98,8 @@ module George
       File.join(TERMS_DIR, self.term_id, "courses", self.full_id)
     end
 
-    def dir
-      Dir.new(self.path)
-    end
-
     def sections_path
-      File.join(self.dir, "sections")
+      File.join(self.path, "sections")
     end
 
     def sections_dir
@@ -149,10 +145,34 @@ module George
       "http://www.bkstr.com/webapp/wcs/stores/servlet/booklookServlet?bookstore_id-1=122&term_id-1=#{self.term_id}&div-1=&dept-1=#{self.department_id}&course-1=#{self.course_id}&section-1=#{self.id}"
     end
 
+    def course_full_id
+      "#{self.department_id}-#{self.course_id}"
+    end
+
+    def path
+      File.join(TERMS_DIR, self.term_id, "courses", self.course_full_id, "sections", self.id)
+    end
+
+    def reports_path
+      File.join(path, "reports")
+    end
+
+    def summary_report_path
+      File.join(reports_path, "class_summary.html")
+    end
+
     def generate_roster
       puts "GENERATING ROSTER FOR SECTION #{self.inspect}"
-      puts self.schedule_url
-      puts self.required_materials_url
+      document = Nokogiri::HTML(open(summary_report_path))
+      tables = document.css("table")
+      summary_tables = tables.select{|t| t.attributes["class"] && t.attributes["class"].value == "datadisplaytable"}
+      #course_summary_table      = summary_tables.find{|t| t.attributes["summary"] && t.attributes["summary"].value == "This table displays the attributes of the course." }
+      #enrollment_summary_table  = summary_tables.find{|t| t.attributes["summary"] && t.attributes["summary"].value == "This table displays enrollment and waitlist counts." }
+      class_list                = summary_tables.find{|t| t.attributes["summary"] && t.attributes["summary"].value == "This table displays a list of students registered for the course; summary information about each student is provided." }
+      class_list_rows = class_list.css("tr")
+      class_list_rows.each do |tr|
+        binding.pry
+      end
     end
   end
 end
