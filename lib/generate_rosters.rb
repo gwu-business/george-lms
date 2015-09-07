@@ -1,4 +1,8 @@
 #
+# to run from the root directory: `ruby lib/generate_rosters.rb`
+#
+
+#
 # CODE LIBRARY (todo: refactor and separate into different files)
 #
 
@@ -12,12 +16,14 @@
 #   + https://github.com/s2t2/branford_station/blob/1f7fc32f2788e95b0748c3e96645b27d792e3f79/app/workers/google_transit_data_feed_extractor.rb
 #   + https://github.com/s2t2/branford_station/blob/1f7fc32f2788e95b0748c3e96645b27d792e3f79/spec/workers/google_transit_data_feed_extractor_spec.rb
 #   + http://www.rubydoc.info/github/sparklemotion/nokogiri/Nokogiri/XML/Element
+#   + http://stackoverflow.com/questions/4822422/output-array-to-csv-in-ruby
+#   + http://stackoverflow.com/a/15912856/670433
 
 require 'pry'
 require 'json'
 #require 'open-uri'
 require 'nokogiri'
-#require 'csv'
+require 'csv'
 
 module George
   TERMS_PATH = File.expand_path("../../terms", __FILE__)
@@ -159,8 +165,11 @@ module George
       File.join(reports_path, "class_summary.html")
     end
 
-    def generate_roster
-      puts "GENERATING ROSTER FOR SECTION #{self.inspect}"
+    def enrollments_report_path
+      File.join(reports_path, "enrollments.csv")
+    end
+
+    def enrollments
 
       #
       # Get Data Table(s)
@@ -189,9 +198,11 @@ module George
       # Parse Enrollments Table
       #
 
-      enrollments = enrollments_table.css("tr")
+      enrollments = []
 
-      enrollments.each_with_index do |enrollment, index|
+      enrollment_rows = enrollments_table.css("tr")
+
+      enrollment_rows.each_with_index do |enrollment, index|
         next if index == 0 # ... skip the first row (headers) where enrollment.content == "\nRecordNumber\nWaitlist Position\nStudent Name\nID\nReg Status\nLevel\nCredits\nNotification Expires\n \n"
 
         # Get email link
@@ -214,7 +225,7 @@ module George
         waitlist_position = attribute_values[1]
         #student_name = attribute_values[2].strip
         student_gwid = attribute_values[3]
-        registration_status = attribute_values[4]
+        registration_status = attribute_values[4].gsub("**","")
         level = attribute_values[5]
         credits = attribute_values[6].strip
         notification_expires = attribute_values[7].strip
@@ -236,7 +247,23 @@ module George
           :notification_expires => notification_expires
         }
 
-        pp enrollment_attributes
+        enrollments << enrollment_attributes
+      end
+
+      return enrollments
+    end
+
+    def generate_roster
+      puts "GENERATING ROSTER FOR SECTION #{self.inspect}"
+
+      FileUtils.rm_f(enrollments_report_path)
+
+      @enrollments = self.enrollments
+
+      CSV.open(enrollments_report_path, "w", :write_headers=> true, :headers => @enrollments.first.keys.map{|k| k.to_s}) do |csv|
+        @enrollments.each do |enrollment_attributes|
+          csv << enrollment_attributes.values
+        end
       end
     end
   end
