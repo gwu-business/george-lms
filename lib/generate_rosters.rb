@@ -11,9 +11,7 @@
 #   + https://github.com/debate-watch/twenty_sixteen/blob/9ea59464df64cabc1236991bf12b3ff6a9162a3b/lib/twenty_sixteen/candidate.rb
 #   + https://github.com/s2t2/branford_station/blob/1f7fc32f2788e95b0748c3e96645b27d792e3f79/app/workers/google_transit_data_feed_extractor.rb
 #   + https://github.com/s2t2/branford_station/blob/1f7fc32f2788e95b0748c3e96645b27d792e3f79/spec/workers/google_transit_data_feed_extractor_spec.rb
-
-# assumptions:
-#   + term identifiers can be converted into integers for numeric comparison
+#   + http://www.rubydoc.info/github/sparklemotion/nokogiri/Nokogiri/XML/Element
 
 require 'pry'
 require 'json'
@@ -42,7 +40,7 @@ module George
 
     def self.current
       term_ids = TERMS_DIR.entries.reject{|t| t.include?(".")} # converts [".", "..", "201502", "201503"] to ["201502", "201503"]
-      term_ids = term_ids.sort_by(&:to_i) # sorts in ascending order
+      term_ids = term_ids.sort #.sort_by(&:to_i) # sorts in ascending order
       term_id = term_ids.last
       term_file = File.join(TERMS_DIR, term_id, "term.json")
       term_file_contents = File.read(term_file)
@@ -163,15 +161,82 @@ module George
 
     def generate_roster
       puts "GENERATING ROSTER FOR SECTION #{self.inspect}"
+
+      #
+      # Get Data Table(s)
+      #
+
       document = Nokogiri::HTML(open(summary_report_path))
       tables = document.css("table")
-      summary_tables = tables.select{|t| t.attributes["class"] && t.attributes["class"].value == "datadisplaytable"}
-      #course_summary_table      = summary_tables.find{|t| t.attributes["summary"] && t.attributes["summary"].value == "This table displays the attributes of the course." }
-      #enrollment_summary_table  = summary_tables.find{|t| t.attributes["summary"] && t.attributes["summary"].value == "This table displays enrollment and waitlist counts." }
-      class_list                = summary_tables.find{|t| t.attributes["summary"] && t.attributes["summary"].value == "This table displays a list of students registered for the course; summary information about each student is provided." }
-      class_list_rows = class_list.css("tr")
-      class_list_rows.each do |tr|
-        binding.pry
+      data_tables = tables.select{|t| t.attributes["class"] && t.attributes["class"].value == "datadisplaytable"}
+      #course_summary_table     = data_tables.find{|t| t.attributes["summary"] && t.attributes["summary"].value == "This table displays the attributes of the course." }
+      #enrollment_summary_table = data_tables.find{|t| t.attributes["summary"] && t.attributes["summary"].value == "This table displays enrollment and waitlist counts." }
+      enrollments_table         = data_tables.find{|t| t.attributes["summary"] && t.attributes["summary"].value == "This table displays a list of students registered for the course; summary information about each student is provided." }
+
+      #
+      # Parse Course Summary Table
+      #
+
+      # todo
+
+      #
+      # Parse Enrollment Summary Table
+      #
+
+      # todo
+
+      #
+      # Parse Enrollments Table
+      #
+
+      enrollments = enrollments_table.css("tr")
+
+      enrollments.each_with_index do |enrollment, index|
+        next if index == 0 # ... skip the first row (headers) where enrollment.content == "\nRecordNumber\nWaitlist Position\nStudent Name\nID\nReg Status\nLevel\nCredits\nNotification Expires\n \n"
+
+        # Get email link
+
+        email_link = enrollment.css("a").find{|a| a.attributes["href"].value.include?("mailto:") }
+
+        # Parse email link
+
+        student_email_address = email_link.attributes["href"].value.gsub("mailto:","") #net_id = email_address.gsub("@gwu.edu")
+        #student_net_id = student_email_address.gsub("@gwu.edu","")
+        student_full_name = email_link.attributes["target"].value
+
+        # Get table values
+
+        attribute_values = enrollment.children.text.strip.split("\n")
+
+        # Parse table values
+
+        record_number = attribute_values[0]
+        waitlist_position = attribute_values[1]
+        #student_name = attribute_values[2].strip
+        student_gwid = attribute_values[3]
+        registration_status = attribute_values[4]
+        level = attribute_values[5]
+        credits = attribute_values[6].strip
+        notification_expires = attribute_values[7].strip
+
+        #first_name_middle_initial = student_name.split(",").last.strip
+        #last_name = student_name.split(",").first.strip
+
+        # Transform.
+
+        enrollment_attributes = {
+          :id => record_number,
+          :waitlist_position => waitlist_position,
+          :student_gwid => student_gwid,
+          :student_email_address => student_email_address,
+          :student_full_name => student_full_name,
+          :registration_status => registration_status,
+          :student_level => level,
+          :credits => credits,
+          :notification_expires => notification_expires
+        }
+
+        pp enrollment_attributes
       end
     end
   end
@@ -181,8 +246,10 @@ end
 # PROCESS/TASK
 #
 
+# Generate all current course enrollment report.
+
 current_courses = George::Term.current.courses
 current_sections = current_courses.map{|course| course.sections }.flatten
 current_sections.each do |section|
-  section.generate_roster
+  section.generate_roster # generate enrollment report
 end
