@@ -12,7 +12,7 @@ Generates machine-readable class rosters.
 
 ### Generate Roster
 
-Download Detailed Class List
+Download **Detailed Class List**.
 
  1. Log in to GWeb.
  * Navigate to the *Faculty Menu*.
@@ -23,7 +23,7 @@ Download Detailed Class List
 
 > Save as: terms/`:term_id`/courses/`:course_id`/sections/`:section_id`/reports/class_details.html
 
-Download Summary Class List
+Download **Summary Class List**.
 
  1. Log in to GWeb.
  * Navigate to the *Faculty Menu*.
@@ -34,7 +34,7 @@ Download Summary Class List
 
 > Save as: terms/`:term_id`/courses/`:course_id`/sections/`:section_id`/reports/class_summary.html
 
-Run the Roster Generation Script
+Run the roster-generation script.
 
 ```` sh
 ruby lib/generate_rosters.rb
