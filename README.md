@@ -21,7 +21,7 @@ Download Detailed Class List
  * Select a *Course*. Submit selection.
  * View *Detail Faculty Class List*, and download source (html-only).
 
-> Save as: terms/`:term_id`/courses/`:course_id`/sections/`:section_id`/lists/class_details.html
+> Save as: terms/`:term_id`/courses/`:course_id`/sections/`:section_id`/reports/class_details.html
 
 Download Summary Class List
 
@@ -32,7 +32,7 @@ Download Summary Class List
  + Select a *Course*. Submit selection.
  + View *Summary Faculty Class List*, and download source (html-only).
 
-> Save as: terms/`:term_id`/courses/`:course_id`/sections/`:section_id`/lists/class_summary.html
+> Save as: terms/`:term_id`/courses/`:course_id`/sections/`:section_id`/reports/class_summary.html
 
 Run the Roster Generation Script
 
@@ -40,7 +40,7 @@ Run the Roster Generation Script
 ruby lib/generate_rosters.rb
 ````
 
-> This should produce a file for each course in the corresponding course directory: terms/`:term_id`/courses/`:course_id`/sections/`:section_id`/roster.csv
+> This should produce a file for each course in the corresponding course directory: terms/`:term_id`/courses/`:course_id`/sections/`:section_id`/reports/enrollments.csv
 
 ## Contributing
 
