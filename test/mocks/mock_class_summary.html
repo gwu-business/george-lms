@@ -1,0 +1,382 @@
+<!-- example class summary html -->
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/transitional.dtd">
+<HTML lang="en">
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<LINK REL="stylesheet" HREF="/css/web_defaultapp.css" TYPE="text/css">
+<LINK REL="stylesheet" HREF="/css/web_defaultprint.css" TYPE="text/css" media="print">
+<TITLE>Banner Secured Area</TITLE>
+<META HTTP-EQUIV="Content-Script-Type" NAME="Default_Script_Language" CONTENT="text/javascript">
+<SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript">
+<!-- Hide JavaScript from older browsers
+window.onunload = function() {submitcount=0;}
+var submitcount=0;
+function checkSubmit() {
+if (submitcount == 0)
+   {
+   submitcount++;
+   return true;
+   }
+else
+   {
+alert("Your changes have already been submitted.");
+   return false;
+   }
+}
+//  End script hiding -->
+</SCRIPT>
+<SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript">
+<!-- Hide JavaScript from older browsers
+//  Function to open a window
+function windowOpen(window_url) {
+   helpWin = window.open(window_url,'','toolbar=yes,status=no,scrollbars=yes,menubar=yes,resizable=yes,directories=no,location=no,width=350,height=400');
+   if (document.images) {
+       if (helpWin) helpWin.focus()
+   }
+}
+//  End script hiding -->
+</SCRIPT>
+</HEAD>
+<BODY>
+<div id="headerImage">
+<IMG SRC="/imag_images/gweb_is_2.gif" CLASS="headerImg" TITLE=""  NAME="IMAG - GWeb Information System" HSPACE=0 VSPACE=0 BORDER=0>
+</div>
+<DIV class="headerwrapperdiv">
+<DIV class="pageheaderdiv1">
+<A HREF="#main_content" onMouseover="window.status='Go to Main Content'; return true" onMouseout="window.status=''; return true" OnFocus="window.status='Go to Main Content'; return true" onBlur="window.status=''; return true" class="skiplinks">Go to Main Content</A>
+<H1><B CLASS=imag_header></H1></DIV><DIV class="headerlinksdiv">
+<SPAN class="pageheaderlinks2">
+<MAP NAME="Module_Navigation_Links_H" title="Module Navigation Links">
+<p>
+<A HREF="#skip_Module_Navigation_Links_H" onMouseover="window.status='Skip Module Navigation Links'; return true" onMouseout="window.status=''; return true" onFocus="window.status='Skip Module Navigation Links'; return true" onBlur="window.status=''; return true"  class="skiplinks">Skip Module Navigation Links</A>
+<TABLE  CLASS="plaintable" SUMMARY="This is main table for displaying Tab Items."
+                          WIDTH="100%" cellSpacing=0 cellPadding=0 border=0>
+<TR>
+<TD CLASS="pldefault">
+<TABLE  CLASS="plaintable" SUMMARY="This table displays Tab Items."
+                 cellSpacing=0 cellPadding=0 border=0>
+<TR>
+<td class="taboff" height=22>
+<A HREF="/PRODCartridge/twbkwbis.P_GenMenu?name=bmenu.P_StuMainMnu" onMouseover="window.status='Student Services & Financial Aid'; return true" onMouseout="window.status=''; return true" onFocus="window.status='Student Services & Financial Aid'; return true" onBlur="window.status=''; return true" >Student Records & Registration Menu</A>
+</TD>
+<TD class="bgtaboff" height=22 vAlign="top" align="right">
+<IMG SRC="/wtlgifs/web_tab_corner_right.gif" ALT="Tab Corner Right" CLASS="headerImg" TITLE="Tab Corner Right"  NAME="web_tab_corner_right" HSPACE=0 VSPACE=0 BORDER=0 HEIGHT=20 WIDTH=8>
+</TD>
+<td class="taboff" height=22>
+<A HREF="/PRODCartridge/twbkwbis.P_GenMenu?name=bmenu.P_FinAidMainMnu" onMouseover="window.status='Financial Aid'; return true" onMouseout="window.status=''; return true" onFocus="window.status='Financial Aid'; return true" onBlur="window.status=''; return true" >Financial Aid</A>
+</TD>
+<TD class="bgtaboff" height=22 vAlign="top" align="right">
+<IMG SRC="/wtlgifs/web_tab_corner_right.gif" ALT="Tab Corner Right" CLASS="headerImg" TITLE="Tab Corner Right"  NAME="web_tab_corner_right" HSPACE=0 VSPACE=0 BORDER=0 HEIGHT=20 WIDTH=8>
+</TD>
+<td class="taboff" height=22>
+<A HREF="/PRODCartridge/twbkwbis.P_GenMenu?name=bmenu.P_GenMnu" onMouseover="window.status='Personal Information'; return true" onMouseout="window.status=''; return true" onFocus="window.status='Personal Information'; return true" onBlur="window.status=''; return true" >Personal Information Menu</A>
+</TD>
+<TD class="bgtaboff" height=22 vAlign="top" align="right">
+<IMG SRC="/wtlgifs/web_tab_corner_right.gif" ALT="Tab Corner Right" CLASS="headerImg" TITLE="Tab Corner Right"  NAME="web_tab_corner_right" HSPACE=0 VSPACE=0 BORDER=0 HEIGHT=20 WIDTH=8>
+</TD>
+<td class="tabon"  height=22>
+<A HREF="/PRODCartridge/twbkwbis.P_GenMenu?name=bmenu.P_FacMainMnu" onMouseover="window.status='Faculty Main Menu'; return true" onMouseout="window.status=''; return true" onFocus="window.status='Faculty Main Menu'; return true" onBlur="window.status=''; return true" >Faculty Menu</A>
+</TD>
+<TD class="bgtabon"  height=22 vAlign="top" align="right">
+<IMG SRC="/wtlgifs/web_tab_corner_right.gif" ALT="Tab Corner Right" CLASS="headerImg" TITLE="Tab Corner Right"  NAME="web_tab_corner_right" HSPACE=0 VSPACE=0 BORDER=0 HEIGHT=20 WIDTH=8>
+</TD>
+<td class="taboff" height=22>
+<A HREF="/PRODCartridge/twbkwbis.P_GenMenu?name=pmenu.P_MainMnu" onMouseover="window.status='Employee Information'; return true" onMouseout="window.status=''; return true" onFocus="window.status='Employee Information'; return true" onBlur="window.status=''; return true" >Employee Information</A>
+</TD>
+<TD class="bgtaboff" height=22 vAlign="top" align="right">
+<IMG SRC="/wtlgifs/web_tab_corner_right.gif" ALT="Tab Corner Right" CLASS="headerImg" TITLE="Tab Corner Right"  NAME="web_tab_corner_right" HSPACE=0 VSPACE=0 BORDER=0 HEIGHT=20 WIDTH=8>
+</TD>
+<td class="taboff" height=22>
+<A HREF="/PRODCartridge/twbkwbis.P_GenMenu?name=bmenu.P_EmergencyMenu" onMouseover="window.status='GW Alert Emergency Notification'; return true" onMouseout="window.status=''; return true" onFocus="window.status='GW Alert Emergency Notification'; return true" onBlur="window.status=''; return true" >GW Alert Emergency Notification</A>
+</TD>
+<TD class="bgtaboff" height=22 vAlign="top" align="right">
+<IMG SRC="/wtlgifs/web_tab_corner_right.gif" ALT="Tab Corner Right" CLASS="headerImg" TITLE="Tab Corner Right"  NAME="web_tab_corner_right" HSPACE=0 VSPACE=0 BORDER=0 HEIGHT=20 WIDTH=8>
+</TD>
+</TR>
+</TABLE>
+</TD>
+</TR>
+<TR>
+<TD class="bgtabon" width="100%" colSpan=2><IMG SRC="/wtlgifs/web_transparent.gif" ALT="Transparent Image" CLASS="headerImg" TITLE="Transparent Image"  NAME="web_transparent" HSPACE=0 VSPACE=0 BORDER=0 HEIGHT=3 WIDTH=10></TD></TR></TABLE>
+</MAP>
+</SPAN>
+<a name="skip_Module_Navigation_Links_H"></a>
+</DIV>
+<TABLE  CLASS="plaintable" SUMMARY="This table displays Menu Items and Banner Search textbox."
+         WIDTH="100%">
+<TR>
+<TD CLASS="pldefault">
+<DIV class="headerlinksdiv2">
+<FORM ACTION="/PRODCartridge/twbksrch.P_ShowResults" METHOD="POST">
+Search
+<SPAN class="fieldlabeltextinvisible"><LABEL for=keyword_in_id><SPAN class="fieldlabeltext">Search</SPAN></LABEL></SPAN>
+<INPUT TYPE="text" NAME="KEYWRD_IN" SIZE="20" MAXLENGTH="65" ID="keyword_in_id">
+<INPUT TYPE="submit" VALUE="Go">
+</FORM>
+</div>
+</TD>
+<TD CLASS="pldefault"><p class="rightaligntext"></p>
+<SPAN class="pageheaderlinks">
+<A HREF="/PRODCartridge/twbkwbis.P_GenMenu?name=bmenu.P_FacMainMnu"  class="submenulinktext2" id="ssbbackurl">RETURN TO MENU</A>
+|
+<A HREF="/PRODCartridge/twbksite.P_DispSiteMap?menu_name_in=bmenu.P_MainMnu&amp;depth_in=2&amp;columns_in=3" accesskey="2" class="submenulinktext2">SITE MAP</A>
+|
+<A HREF="/fachelp/hwshfcw2.htm                " accesskey="H" onClick="popup = window.open('/fachelp/hwshfcw2.htm                ', 'PopupPage','height=500,width=450,scrollbars=yes,resizable=yes'); return false" target="_blank" onMouseOver="window.status='';  return true" onMouseOut="window.status=''; return true"onFocus="window.status='';  return true" onBlur="window.status=''; return true"  class="submenulinktext2">HELP</A>
+|
+<A HREF="twbkwbis.P_Logout" accesskey="3" class="submenulinktext2">EXIT</A>
+</span>
+</TD>
+</TR>
+</TABLE>
+</DIV>
+<DIV class="pagetitlediv">
+<TABLE  CLASS="plaintable" SUMMARY="This table displays title and static header displays."
+   WIDTH="100%">
+<TR>
+<TD CLASS="pldefault">
+<H2>Summary Faculty Class List</B></H2>
+</TD>
+<TD CLASS="pldefault">
+&nbsp;
+</TD>
+<TD CLASS="pldefault"><p class="rightaligntext"></p>
+<DIV class="staticheaders">
+Fall 2015<br>
+09/05/15 05:42 pm<br>
+</div>
+</TD>
+</TR>
+<TR>
+<TD class="bg3" width="100%" colSpan=3><IMG SRC="/wtlgifs/web_transparent.gif" ALT="Transparent Image" CLASS="headerImg" TITLE="Transparent Image"  NAME="web_transparent" HSPACE=0 VSPACE=0 BORDER=0 HEIGHT=3 WIDTH=10></TD>
+</TR>
+</TABLE>
+<a name="main_content"></a>
+</DIV>
+<DIV class="pagebodydiv">
+<!--  ** END OF twbkwbis.P_OpenDoc **  -->
+
+<DIV class="infotextdiv"><TABLE  CLASS="infotexttable" SUMMARY="This layout table contains information that may be helpful in understanding the content and functionality of this page.  It could be a brief set of instructions, a description of error messages, or other special information."><TR><TD CLASS="indefault"><IMG SRC="/wtlgifs/twgginfo.gif" CLASS="headerImg" TITLE=""  NAME="Info" HSPACE=0 VSPACE=0 BORDER=0 HEIGHT=24 WIDTH=27></TD><TD CLASS="indefault"><SPAN class="infotext"> <i>An asterisk will appear next to the appropriate field if any of the following conditions exist:<br><b>1)</b> If the student has more than one major or department in their primary or secondary curriculum.<br> <b>2)</b> If the student has a program, level, college, or degree in their secondary curriculum that is different from that in their primary curriculum. </i></SPAN></TD></TR></TABLE><P></DIV>
+<DIV class="infotextdiv"><TABLE  CLASS="infotexttable" SUMMARY="This layout table contains information that may be helpful in understanding the content and functionality of this page.  It could be a brief set of instructions, a description of error messages, or other special information."><TR><TD CLASS="indefault"><SPAN class="infotext"> <p><i>If the word "Confidential" appears next to a student's name, their personal information is to be kept confidential.</i></SPAN></TD></TR></TABLE><P></DIV>
+<DIV class="infotextdiv"><TABLE  CLASS="infotexttable" SUMMARY="This layout table contains information that may be helpful in understanding the content and functionality of this page.  It could be a brief set of instructions, a description of error messages, or other special information."><TR><TD CLASS="indefault"><SPAN class="infotext"> <I>Click on a student's name to view their address(es) and phone(s).</I><P></SPAN></TD></TR></TABLE><P></DIV>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<TABLE  CLASS="datadisplaytable" summary="This table displays the attributes of the course."><CAPTION class="captiontext">Course Information</CAPTION>
+<TR>
+<TH COLSPAN="2" CLASS="ddlabel" scope="row" ><A HREF="/PRODCartridge/bwckctlg.p_disp_listcrse?term_in=201503&amp;subj_in=ISTM&amp;crse_in=4121&amp;schd_in=L">Database Design & Application - ISTM 4121 10</A></TH>
+</TR>
+<TR>
+<TH CLASS="ddlabel" scope="row" ><ACRONYM title = "Course Reference Number">CRN:</ACRONYM></TH>
+<TD CLASS="dddefault"><A HREF="/PRODCartridge/bwlkfcwl.P_FacClaList?crn=62576">62576</A></TD>
+</TR>
+<TR>
+<TH CLASS="ddlabel" scope="row" >Duration:</TH>
+<TD CLASS="dddefault">08/31/15 - 12/09/15</TD>
+</TR>
+<TR>
+<TH CLASS="ddlabel" scope="row" >Status:</TH>
+<TD CLASS="dddefault">Active</TD>
+</TR>
+</TABLE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<BR>
+<TABLE  CLASS="datadisplaytable" summary="This table displays enrollment and waitlist counts."><CAPTION class="captiontext">Enrollment Counts</CAPTION>
+<TR>
+<TH CLASS="ddheader" scope="col" >&nbsp;</TH>
+<TH CLASS="ddheader" scope="col" >Maximum</TH>
+<TH CLASS="ddheader" scope="col" >Actual</TH>
+<TH CLASS="ddheader" scope="col" >Remaining</TH>
+</TR>
+<TR>
+<TH CLASS="ddlabel" scope="row" >Enrollment:</TH>
+<TD CLASS="dddefault">40</TD>
+<TD CLASS="dddefault">35</TD>
+<TD CLASS="dddefault">5</TD>
+</TR>
+<TR>
+<TH CLASS="ddlabel" scope="row" >Cross List: </TH>
+<TD CLASS="dddefault">0</TD>
+<TD CLASS="dddefault">0</TD>
+<TD CLASS="dddefault">0</TD>
+</TR>
+</TABLE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<BR>
+<TABLE  CLASS="datadisplaytable" summary="This table displays a list of students registered for the course; summary information about each student is provided." WIDTH="100%"><CAPTION class="captiontext">Summary Class List</CAPTION>
+  <TR>
+    <TH CLASS="ddheader" scope="col" >Record<BR>Number</TH>
+    <TH CLASS="ddheader" scope="col" >Waitlist Position</TH>
+    <TH CLASS="ddheader" scope="col" >Student Name</TH>
+    <TH CLASS="ddheader" scope="col" ><ACRONYM title = "Identification Number">ID</ACRONYM></TH>
+    <TH CLASS="ddheader" scope="col" ><ABBR title = "Registration Status">Reg Status</ABBR></TH>
+    <TH CLASS="ddheader" scope="col" >Level</TH>
+    <TH CLASS="ddheader" scope="col" >Credits</TH>
+    <TH CLASS="ddheader" scope="col" >Notification Expires</TH>
+    <TD CLASS="dddead">&nbsp;</TD>
+  </TR>
+  <TR>
+    <TD CLASS="dddefault">1</TD>
+    <TD CLASS="dddefault">0</TD>
+    <TD CLASS="dddefault"><SPAN class="fieldmediumtext"><A HREF="/PRODCartridge/bwlkosad.P_FacSelectAtypView?xyz=OTg5NzkyNg==" onMouseOver="window.status='Student Information';  return true" onFocus="window.status='Student Information';  return true" onMouseOut="window.status='';  return true"onBlur="window.status='';  return true">Appleseed, John A.</A> </SPAN></TD>
+    <TD CLASS="dddefault"><SPAN class="fieldmediumtext">G12345678</SPAN></TD>
+    <TD CLASS="dddefault"><SPAN class="fieldmediumtext">**Registered**</SPAN></TD>
+    <TD CLASS="dddefault"><SPAN class="fieldmediumtext">Graduate</SPAN></TD>
+    <TD CLASS="dddefault"><SPAN class="fieldmediumtext">    3.000</SPAN></TD>
+    <TD CLASS="dddead">&nbsp;</TD>
+    <TD CLASS="dddefault">&nbsp;</TD>
+    <TD CLASS="dddefault"><SPAN class="fieldmediumtext"><A HREF="mailto:appleseed@gwu.edu"    target="John A. Appleseed" ><IMG SRC="/wtlgifs/web_email.gif" ALIGN="middle" ALT="E-mail" CLASS="headerImg" TITLE="E-mail"  NAME="web_email" HSPACE=0 VSPACE=0 BORDER=0 HEIGHT=28 WIDTH=28></A></SPAN></TD>
+  </TR>
+  <TR>
+    <TD CLASS="dddefault">2</TD>
+    <TD CLASS="dddefault">0</TD>
+    <TD CLASS="dddefault"><SPAN class="fieldmediumtext"><A HREF="/PRODCartridge/bwlkosad.P_FacSelectAtypView?xyz=OTg5NzkyNg==" onMouseOver="window.status='Student Information';  return true" onFocus="window.status='Student Information';  return true" onMouseOut="window.status='';  return true"onBlur="window.status='';  return true">Jamison, George G.</A> </SPAN></TD>
+    <TD CLASS="dddefault"><SPAN class="fieldmediumtext">G87654321</SPAN></TD>
+    <TD CLASS="dddefault"><SPAN class="fieldmediumtext">**Registered**</SPAN></TD>
+    <TD CLASS="dddefault"><SPAN class="fieldmediumtext">Undergraduate</SPAN></TD>
+    <TD CLASS="dddefault"><SPAN class="fieldmediumtext">    3.000</SPAN></TD>
+    <TD CLASS="dddead">&nbsp;</TD>
+    <TD CLASS="dddefault">&nbsp;</TD>
+    <TD CLASS="dddefault"><SPAN class="fieldmediumtext"><A HREF="mailto:jamison@gwu.edu"    target="George G. Jamison" ><IMG SRC="/wtlgifs/web_email.gif" ALIGN="middle" ALT="E-mail" CLASS="headerImg" TITLE="E-mail"  NAME="web_email" HSPACE=0 VSPACE=0 BORDER=0 HEIGHT=28 WIDTH=28></A></SPAN></TD>
+  </TR>
+  <TR>
+    <TD CLASS="dddefault">3</TD>
+    <TD CLASS="dddefault">0</TD>
+    <TD CLASS="dddefault"><SPAN class="fieldmediumtext"><A HREF="/PRODCartridge/bwlkosad.P_FacSelectAtypView?xyz=OTg5NzkyNg==" onMouseOver="window.status='Student Information';  return true" onFocus="window.status='Student Information';  return true" onMouseOut="window.status='';  return true"onBlur="window.status='';  return true">Johnson, Katie P.</A> </SPAN></TD>
+    <TD CLASS="dddefault"><SPAN class="fieldmediumtext">G18273645</SPAN></TD>
+    <TD CLASS="dddefault"><SPAN class="fieldmediumtext">**Registered**</SPAN></TD>
+    <TD CLASS="dddefault"><SPAN class="fieldmediumtext">Undergraduate</SPAN></TD>
+    <TD CLASS="dddefault"><SPAN class="fieldmediumtext">    3.000</SPAN></TD>
+    <TD CLASS="dddead">&nbsp;</TD>
+    <TD CLASS="dddefault">&nbsp;</TD>
+    <TD CLASS="dddefault"><SPAN class="fieldmediumtext"><A HREF="mailto:johnson@gwu.edu"    target="Katie P. Johnson" ><IMG SRC="/wtlgifs/web_email.gif" ALIGN="middle" ALT="E-mail" CLASS="headerImg" TITLE="E-mail"  NAME="web_email" HSPACE=0 VSPACE=0 BORDER=0 HEIGHT=28 WIDTH=28></A></SPAN></TD>
+  </TR>
+</TABLE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<P class="whitespace1">
+<A HREF="mailto:all_students@gwu.edu">Email class</A>
+<A HREF="mailto:?all_students@gwu.edu"     ><IMG SRC="/wtlgifs/web_email.gif" ALIGN="middle" ALT="E-mail" CLASS="headerImg" TITLE="E-mail"  NAME="web_email" HSPACE=0 VSPACE=0 BORDER=0 HEIGHT=28 WIDTH=28></A>
+<P class="whitespace1">
+<A HREF="javascript:history.go(-1)" onMouseOver="window.status='Return to Previous';  return true" onFocus="window.status='Return to Previous';  return true" onMouseOut="window.status='';  return true"onBlur="window.status='';  return true">Return to Previous</A>
+
+<!--  ** START OF twbkwbis.P_CloseDoc **  -->
+<TABLE  CLASS="plaintable" SUMMARY="This is table displays line separator at end of the page."
+                                             WIDTH="100%" cellSpacing=0 cellPadding=0 border=0><TR><TD class="bgtabon" width="100%" colSpan=2><IMG SRC="/wtlgifs/web_transparent.gif" ALT="Transparent Image" CLASS="headerImg" TITLE="Transparent Image"  NAME="web_transparent" HSPACE=0 VSPACE=0 BORDER=0 HEIGHT=3 WIDTH=10></TD></TR></TABLE>
+<A HREF="#top" onMouseover="window.status='Skip to top of page'; return true" onMouseout="window.status=''; return true" OnFocus="window.status='Skip to top of page'; return true" onBlur="window.status=''; return true" class="skiplinks">Skip to top of page</A>
+</DIV>
+<DIV class="footerbeforediv">
+
+</DIV>
+<DIV class="footerlinksdiv">
+<SPAN class="pagefooterlinks">
+<MAP NAME="Banner_Secured_Area_Links_F" title="Banner Secured Area Links">
+<p>
+<A HREF="#skip_Banner_Secured_Area_Links_F" onMouseover="window.status='Skip Banner Secured Area Links'; return true" onMouseout="window.status=''; return true" onFocus="window.status='Skip Banner Secured Area Links'; return true" onBlur="window.status=''; return true"  class="skiplinks">Skip Banner Secured Area Links</A>
+<P>[ <A HREF="/PRODCartridge/bwlkostm.P_FacSelTerm">Term Selection</A>
+ | <A HREF="/PRODCartridge/bwlkocrn.P_FacCrnSel">CRN Selection</A>
+ | <A HREF="/PRODCartridge/bwlkfcwl.P_FacClaList">Detail Class List</A>
+ | <A HREF="/PRODCartridge/bwlkffgd.P_FacFinGrd">Final Grades</A>
+ | <A HREF="/PRODCartridge/bwlkifac.P_FacSched">Faculty Detail Schedule</A>
+ ]
+</MAP>
+</SPAN>
+<a name="skip_Banner_Secured_Area_Links_F"></a>
+</DIV>
+<DIV class="footerafterdiv">
+
+</DIV>
+<DIV class="globalafterdiv">
+
+</DIV>
+<DIV class="globalfooterdiv">
+
+</DIV>
+<DIV class="pagefooterdiv">
+<SPAN class="releasetext">Release: 8.5.1.2g</SPAN>
+</DIV>
+<DIV class="poweredbydiv">
+</DIV>
+<DIV class="div1"></DIV>
+<DIV class="div2"></DIV>
+<DIV class="div3"></DIV>
+<DIV class="div4"></DIV>
+<DIV class="div5"></DIV>
+<DIV class="div6"></DIV>
+<div class="banner_copyright"></div>
+</BODY>
+</HTML>
