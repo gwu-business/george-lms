@@ -6,7 +6,12 @@ A Learning Management System
 
 Requires faculty access to the [GWeb Info System](https://banweb.gwu.edu).
 
-Generates machine-readable class rosters.
+System Functions:
+
+ + Generates machine-readable (.csv) class rosters from GWeb
+ + Uploads rosters to Google Drive
+ + Converts Google Drive rosters to Google Drive grade books
+ + Evaluates student survey assignment submissions, and updates grade books accordingly
 
 ## Usage
 
@@ -41,6 +46,14 @@ ruby lib/generate_rosters.rb
 ````
 
 > This should produce a file for each course in the corresponding course directory: terms/`:term_id`/courses/`:course_id`/sections/`:section_id`/reports/enrollments.csv
+
+### Grade Survey Submissions
+
+Run the survey-grader script.
+
+```` sh
+ruby lib/grade_surveys.rb
+````
 
 ## Contributing
 

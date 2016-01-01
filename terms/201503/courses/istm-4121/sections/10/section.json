@@ -1,0 +1,11 @@
+{
+  "term_id":"201503",
+  "department_id":"ISTM",
+  "course_id":"4121",
+  "section_number":"10",
+  "google_sheets":{
+    "survey":"____________",
+    "roster":"____________",
+    "gradebook":"____________"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "term_id":"201503",
+  "department_id":"BADM",
+  "course_id":"2301",
+  "section_number":"11",
+  "google_sheets":{
+    "survey":"____________",
+    "roster":"____________",
+    "gradebook":"____________"
+  }
+}

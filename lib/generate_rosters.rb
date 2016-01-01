@@ -2,7 +2,7 @@
 # to run from the root directory: `ruby lib/generate_rosters.rb`
 #
 
-# Generate all current course enrollment report.
+# Generate machine-readable rosters for all current courses
 
 require_relative "george"
 

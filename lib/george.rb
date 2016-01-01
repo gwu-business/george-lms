@@ -7,6 +7,7 @@ require 'pry'
 require 'json'
 require 'nokogiri'
 require 'csv'
+# require 'google_sheet_reader'
 
 module George
   TERMS_PATH = File.expand_path("../../terms", __FILE__)
@@ -109,6 +110,47 @@ module George
       end
     end
   end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   #
   # section.rb
@@ -236,7 +278,7 @@ module George
       return enrollments
     end
 
-    def generate_roster
+    def generate_roster # todo: pass option for generating either a .csv or a google sheet.
       puts "GENERATING ROSTER FOR SECTION #{self.inspect}"
 
       FileUtils.rm_f(enrollments_report_path)
@@ -248,6 +290,39 @@ module George
           csv << enrollment_attributes.values
         end
       end
+    end
+
+    #def generate
+    #  #code
+    #end
+
+    #def generate_gradebook  # todo: pass option for generating either a .csv or a google sheet.
+    #  #code
+    #end
+
+
+
+
+
+    def grade_survey_assignment_submissions
+
+      # Connect to the section's "survey responses" google sheet
+
+      # Read the identifiers of all students who have submitted survey responses
+
+      # Connect to the section's "gradebook" google sheet
+
+      # For each student who has submitted a response, update their "survey assignment" grade to be a 1 (full credit) instead of a 0 (no credit)
+
+    end
+
+    def grade_system_analysis_assignment_submissions
+
+      # Visit blackboard; navigate to gradebook,
+
+      # Bulk download all the assignment submission files (reference: https://answers.syr.edu/display/blackboard01/Bulk+Downloading+Attached+Assignments)
+
+
     end
   end
 end
