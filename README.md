@@ -6,35 +6,11 @@ A Learning Management System
 
 Requires faculty access to the [GWeb Info System](https://banweb.gwu.edu).
 
-Generates machine-readable class rosters.
+Generates machine-readable class rosters and student detail reports.
 
 ## Usage
 
 ### Generate Roster
-
-Download **Detailed Class List**.
-
- 1. Log in to GWeb.
- * Navigate to the *Faculty Menu*.
- * Choose *Detail Class List*.
- * Select a *Term*. Submit selection.
- * Select a *Course*. Submit selection.
- * View *Detail Faculty Class List*, and download source (html-only).
-
-> Save as: terms/`:term_id`/courses/`:course_id`/sections/`:section_id`/reports/class_details.html
-
-Download **Summary Class List**.
-
- 1. Log in to GWeb.
- * Navigate to the *Faculty Menu*.
- + Choose *Summary Class List*.
- + Select a *Term*. Submit selection.
- + Select a *Course*. Submit selection.
- + View *Summary Faculty Class List*, and download source (html-only).
-
-> Save as: terms/`:term_id`/courses/`:course_id`/sections/`:section_id`/reports/class_summary.html
-
-Run the roster-generation script.
 
 ```` sh
 ruby lib/generate_rosters.rb
@@ -42,14 +18,74 @@ ruby lib/generate_rosters.rb
 
 > This should produce a file for each course in the corresponding course directory: terms/`:term_id`/courses/`:course_id`/sections/`:section_id`/reports/enrollments.csv
 
+### Generate Student Details
+
+```` sh
+ruby lib/generate_student_details.rb
+````
+
+> This should produce a file for each course in the corresponding course directory: terms/`:term_id`/courses/`:course_id`/sections/`:section_id`/reports/student_details.csv
+
+
+
+
+
+
+
+### Prerequisites
+
+
+Download **Detailed Class List**:
+
+ 1. Log in to GWeb.
+ * Navigate to the *Faculty Menu*.
+ * Choose *Detail Class List*.
+ * Select a *Term*. Submit selection.
+ * Select a *Course*. Submit selection.
+ * View *Detail Class List*, and download source (html-only).
+
+> Save as: terms/`:term_id`/courses/`:course_id`/sections/`:section_id`/reports/class_details.html
+
+Download **Summary Class List**:
+
+ 1. Log in to GWeb.
+ * Navigate to the *Faculty Menu*.
+ + Choose *Summary Class List*.
+ + Select a *Term*. Submit selection.
+ + Select a *Course*. Submit selection.
+ + View *Summary Class List*, and download source (html-only).
+
+> Save as: terms/`:term_id`/courses/`:course_id`/sections/`:section_id`/reports/class_summary.html
+
+For each student, download **Student Address and Phones**:
+  1. Log in to GWeb.
+  * Navigate to the *Faculty Menu*.
+  * Choose *Detail Class List*.
+  * Select a *Term*. Submit selection.
+  * Select a *Course*. Submit selection.
+  * View *Detail Class List*
+  * For each student, click on their name to view their addresses and phones, and download source (html-only).
+
+> Save as: terms/`:term_id`/courses/`:course_id`/sections/`:section_id`/reports/students/addresses/`:student_net_id`.html
+
+For each student, download **Student Academic Transcript**:
+  1. Log in to GWeb.
+  * Navigate to the *Faculty Menu*.
+  * Choose *Detail Class List*.
+  * Select a *Term*. Submit selection.
+  * Select a *Course*. Submit selection.
+  * View *Detail Class List*.
+  * For each student, click on their name to make this student the active selection.
+  * Navigate back to the *Faculty Menu*
+  * Choose *Student Academic Transcript*.
+  * Select "All Levels" and "Web Transcript" from the drop-downs and click "Display Transcript".
+  * Download source (html-only).
+
+> Save as: terms/`:term_id`/courses/`:course_id`/sections/`:section_id`/reports/students/transcripts/`:student_net_id`.html
+
 ## Contributing
 
-To setup a development environment:
- + install git
- + install ruby
- + install bundler
-
-Then clone this repository and install ruby package dependences:
+To setup a development environment, install git, ruby, and bundler. Then clone this repository and install ruby package dependences:
 
 ```` sh
 git clone git@github.com:gwu-business/george-lms.git
@@ -59,10 +95,9 @@ bundle install
 
 ### Testing
 
-To test the roster-generation script, run:
-
 ```` sh
 ruby test/generate_rosters_test.rb
+ruby test/generate_student_details_test.rb
 ````
 
 ## [License](LICENSE)
