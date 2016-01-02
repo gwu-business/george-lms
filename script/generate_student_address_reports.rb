@@ -1,8 +1,8 @@
 #
-# to run from the root directory: `ruby script/generate_student_details.rb`
+# to run from the root directory: `ruby script/generate_student_address_reports.rb`
 #
 
-# Generate student details for each course.
+# Generate student address report for each course.
 
 require_relative "../lib/george.rb"
 

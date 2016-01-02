@@ -69,12 +69,37 @@ module George
       File.join(reports_path, "student_transcripts.csv")
     end
 
-
-
-
     #
     # REPORT-GENERATION METHODS
     #
+
+    def generate_enrollment_report
+      puts "GENERATING ENROLLMENT REPORT (ROSTER) FOR SECTION #{self.inspect}"
+
+      FileUtils.rm_f(enrollment_report_path)
+
+      @enrollments = self.enrollments
+
+      CSV.open(enrollment_report_path, "w", :write_headers=> true, :headers => @enrollments.first.keys.map{|k| k.to_s}) do |csv|
+        @enrollments.each do |enrollment_attributes|
+          csv << enrollment_attributes.values
+        end
+      end
+    end
+
+    def generate_student_address_report
+      puts "GENERATING STUDENT ADDRESS REPORT FOR SECTION #{self.inspect}"
+
+      FileUtils.rm_f(student_address_report_path)
+
+      @student_addresses = self.student_addresses
+
+      CSV.open(student_address_report_path, "w", :write_headers=> true, :headers => @student_addresses.first.keys.map{|k| k.to_s}) do |csv|
+        @student_addresses.each do |student_address_attributes|
+          csv << student_address_attributes.values
+        end
+      end
+    end
 
     def enrollments
 
@@ -191,65 +216,6 @@ module George
       #
 
       return addresses
-    end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    def generate_roster
-      puts "GENERATING ROSTER FOR SECTION #{self.inspect}"
-
-      FileUtils.rm_f(enrollment_report_path)
-
-      @enrollments = self.enrollments
-
-      CSV.open(enrollment_report_path, "w", :write_headers=> true, :headers => @enrollments.first.keys.map{|k| k.to_s}) do |csv|
-        @enrollments.each do |enrollment_attributes|
-          csv << enrollment_attributes.values
-        end
-      end
-    end
-
-    def generate_student_details
-      puts "GENERATING STUDENT DETAILS FOR SECTION #{self.inspect}"
-
-      FileUtils.rm_f(student_details_report_path)
-
-      @student_details = self.student_details
-
-      CSV.open(student_details_report_path, "w", :write_headers=> true, :headers => @student_details.first.keys.map{|k| k.to_s}) do |csv|
-        @student_details.each do |student_detail_attributes|
-          csv << student_detail_attributes.values
-        end
-      end
     end
   end
 end

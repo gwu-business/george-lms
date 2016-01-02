@@ -1,6 +1,6 @@
 #
-# test for script/generate_rosters.rb
-# to run from the root directory: `ruby test/generate_rosters_test.rb`
+# test for script/generate_enrollment_reports.rb
+# to run from the root directory: `ruby test/generate_enrollment_reports_test.rb`
 #
 
 require_relative "../lib/george.rb"
@@ -11,7 +11,7 @@ pp istm4121_enrollment_report_path
 
 FileUtils.rm_f(istm4121_enrollment_report_path)
 
-system "ruby script/generate_rosters.rb"
+system "ruby script/generate_enrollment_reports.rb"
 
 passes_test = File.exist?(istm4121_enrollment_report_path)
 

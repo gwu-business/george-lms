@@ -10,22 +10,29 @@ Generates machine-readable class rosters and student detail reports.
 
 ## Usage
 
-### Generate Roster
+### Generate Enrollment Report
 
 ```` sh
-ruby script/generate_rosters.rb
+ruby script/generate_enrollment_reports.rb
 ````
 
 > This should produce a file for each course in the corresponding course directory: terms/`:term_id`/courses/`:course_id`/sections/`:section_id`/reports/enrollments.csv
 
-### Generate Student Details
+### Generate Student Address Report
 
 ```` sh
-ruby script/generate_student_details.rb
+ruby script/generate_student_address_reports.rb
 ````
 
-> This should produce a file for each course in the corresponding course directory: terms/`:term_id`/courses/`:course_id`/sections/`:section_id`/reports/student_details.csv
+> This should produce a file for each course in the corresponding course directory: terms/`:term_id`/courses/`:course_id`/sections/`:section_id`/reports/student_addresses.csv
 
+### Generate Student Transcript Report
+
+```` sh
+ruby script/generate_student_transcript_reports.rb
+````
+
+> This should produce a file for each course in the corresponding course directory: terms/`:term_id`/courses/`:course_id`/sections/`:section_id`/reports/student_transcripts.csv
 
 
 
@@ -96,8 +103,9 @@ bundle install
 ### Testing
 
 ```` sh
-ruby test/generate_rosters_test.rb
-ruby test/generate_student_details_test.rb
+ruby test/generate_enrollment_reports_test.rb
+ruby test/generate_student_address_reports_test.rb
+ruby test/generate_student_transcript_reports_test.rb
 ````
 
 ## [License](LICENSE)
