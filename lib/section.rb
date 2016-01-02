@@ -25,17 +25,56 @@ module George
       File.join(TERMS_PATH, self.term_id, "courses", self.course_full_id, "sections", self.id)
     end
 
+    #
+    # HTML DOWNLOADS (INPUTS)
+    #
+
+    def downloads_path
+      File.join(path, "downloads")
+    end
+
+    def download_class_summary_path
+      File.join(downloads_path, "class_summary.html")
+    end
+
+    def download_class_details_path
+      File.join(downloads_path, "class_details.html")
+    end
+
+    def download_student_addresses_path
+      File.join(downloads_path, "students", "addresses")
+    end
+
+    def download_student_transcripts_path
+      File.join(downloads_path, "students", "transcripts")
+    end
+
+    #
+    # CSV REPORTS (OUTPUTS)
+    #
+
     def reports_path
       File.join(path, "reports")
     end
 
-    def summary_report_path
-      File.join(reports_path, "class_summary.html")
-    end
-
-    def enrollments_report_path
+    def enrollment_report_path
       File.join(reports_path, "enrollments.csv")
     end
+
+    def student_address_report_path
+      File.join(reports_path, "student_addresses.csv")
+    end
+
+    def student_transcript_report_path
+      File.join(reports_path, "student_transcripts.csv")
+    end
+
+
+
+
+    #
+    # REPORT-GENERATION METHODS
+    #
 
     def enrollments
 
@@ -43,7 +82,7 @@ module George
       # Get Data Table(s)
       #
 
-      document = Nokogiri::HTML(open(summary_report_path))
+      document = Nokogiri::HTML(open(download_class_summary_path))
       tables = document.css("table")
       data_tables = tables.select{|t| t.attributes["class"] && t.attributes["class"].value == "datadisplaytable"}
       #course_summary_table     = data_tables.find{|t| t.attributes["summary"] && t.attributes["summary"].value == "This table displays the attributes of the course." }
@@ -121,16 +160,94 @@ module George
       return enrollments
     end
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    def student_addresses
+
+      addresses = []
+
+      #
+      # Loop through all .html files in  reports/students/addresses
+      #
+
+      return addresses
+    end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     def generate_roster
       puts "GENERATING ROSTER FOR SECTION #{self.inspect}"
 
-      FileUtils.rm_f(enrollments_report_path)
+      FileUtils.rm_f(enrollment_report_path)
 
       @enrollments = self.enrollments
 
-      CSV.open(enrollments_report_path, "w", :write_headers=> true, :headers => @enrollments.first.keys.map{|k| k.to_s}) do |csv|
+      CSV.open(enrollment_report_path, "w", :write_headers=> true, :headers => @enrollments.first.keys.map{|k| k.to_s}) do |csv|
         @enrollments.each do |enrollment_attributes|
           csv << enrollment_attributes.values
+        end
+      end
+    end
+
+    def generate_student_details
+      puts "GENERATING STUDENT DETAILS FOR SECTION #{self.inspect}"
+
+      FileUtils.rm_f(student_details_report_path)
+
+      @student_details = self.student_details
+
+      CSV.open(student_details_report_path, "w", :write_headers=> true, :headers => @student_details.first.keys.map{|k| k.to_s}) do |csv|
+        @student_details.each do |student_detail_attributes|
+          csv << student_detail_attributes.values
         end
       end
     end

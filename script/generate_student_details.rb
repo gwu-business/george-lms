@@ -4,10 +4,11 @@
 
 # Generate student details for each course.
 
-require_relative "george"
+require_relative "../lib/george.rb"
 
 current_courses = George::Term.current.courses
 current_sections = current_courses.map{|course| course.sections }.flatten
 current_sections.each do |section|
-  section.generate_student_details # generate student details report
+  section.generate_student_address_report # generate student address report
+  #section.generate_student_transcript_report # generate student transcript report
 end
