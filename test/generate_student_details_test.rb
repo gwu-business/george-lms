@@ -1,5 +1,5 @@
 #
-# test for lib/generate_student_details.rb
+# test for script/generate_student_details.rb
 # to run from the root directory: `ruby test/generate_student_details_test.rb`
 #
 
@@ -14,7 +14,7 @@ pp istm4121_student_details_report_path
 
 FileUtils.rm_f(istm4121_student_details_report_path)
 
-system "ruby lib/generate_student_details.rb"
+system "ruby script/generate_student_details.rb"
 
 passes_test = File.exist?(istm4121_student_details_report_path)
 

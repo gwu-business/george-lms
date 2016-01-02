@@ -13,7 +13,7 @@ Generates machine-readable class rosters and student detail reports.
 ### Generate Roster
 
 ```` sh
-ruby lib/generate_rosters.rb
+ruby script/generate_rosters.rb
 ````
 
 > This should produce a file for each course in the corresponding course directory: terms/`:term_id`/courses/`:course_id`/sections/`:section_id`/reports/enrollments.csv
@@ -21,7 +21,7 @@ ruby lib/generate_rosters.rb
 ### Generate Student Details
 
 ```` sh
-ruby lib/generate_student_details.rb
+ruby script/generate_student_details.rb
 ````
 
 > This should produce a file for each course in the corresponding course directory: terms/`:term_id`/courses/`:course_id`/sections/`:section_id`/reports/student_details.csv

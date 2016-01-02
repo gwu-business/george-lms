@@ -1,13 +1,13 @@
 #
-# to run from the root directory: `ruby lib/generate_rosters.rb`
+# to run from the root directory: `ruby script/generate_student_details.rb`
 #
 
-# Generate all current course enrollment report.
+# Generate student details for each course.
 
 require_relative "george"
 
 current_courses = George::Term.current.courses
 current_sections = current_courses.map{|course| course.sections }.flatten
 current_sections.each do |section|
-  section.generate_roster # generate enrollment report
+  section.generate_student_details # generate student details report
 end
