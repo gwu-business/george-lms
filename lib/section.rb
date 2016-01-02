@@ -230,62 +230,151 @@ module George
       # Parse Students Table
       #
 
-      students = []
+      students = [{:a => "fun", :b => "times"}]
+      student = {}
+      student_id = 0
+      summary_next = false
+      degree_next = false
+      rows = students_table.css("tr")
+      rows.each_with_index do |row, index|
+        pp student
 
-      student_rows = students_table.css("tr")
+        if row.content == "\nRecordNumber\nStudent Name\nID\nRegistration Status\nWaitlist Position\nNotification Expires\nRegistration Number\n \n"
+          pp student.keys
+          student = {} # reset / delete all student attributes, if any exist
+          student_id+=1
+          summary_next = true # expect the next row to contain student info
+          pp "-----------------"
+          pp "I: #{index}; S: #{student_id}"
+          next
+        end
 
-      student_rows.each_with_index do |student_row, index|
-        next if index == 0 # skip the first row (headers) where student_row.content == "\nRecordNumber\nStudent Name\nID\nRegistration Status\nWaitlist Position\nNotification Expires\nRegistration Number\n \n"
+=begin
 
-        summary_row = student_row.children.text.strip.split("\n")
-        email_link = student_row.css("a").find{|a| a.attributes["href"].value.include?("mailto:") }
+        if summary_next == true
+          summary_row = row.children.text.strip.split("\n")
+          email_link = row.css("a").find{|a| a.attributes["href"].value.include?("mailto:")
+          student.merge!({
+            :record_number => summary_row[0],
+            :full_name => summary_row[1].strip, # Student, Three C.
+            :gwid => summary_row[2], # G1234567
+            :registration_status => summary_row[3].gsub("**",""), # **Web Registered**
+            :waitlist_position => summary_row[4],
+            :notification_expires => summary_row[5],
+            :registration_number => summary_row[6],
+            :email_address => email_link.attributes["href"].value.gsub("mailto:","") # student123@gwu.edu
+          })
+          summary_next = false # reset
+        end
 
-        binding.pry if summary_row[1].nil?
+=end
 
-        record_number = summary_row[0]
-        full_name = summary_row[1].strip
-        gwid = summary_row[2]
-        registration_status = summary_row[3].gsub("**","")
-        waitlist_position = summary_row[4]
-        notification_expires = summary_row[5]
-        registration_number = summary_row[6]
-        email_address = email_link.attributes["href"].value.gsub("mailto:","")
-        degree = "_______"
-        level = "_______"
-        program = "_______"
-        admit_term = "_______"
-        admit_type = "_______"
-        catalog_term = "_______"
-        college = "_______"
-        campus = "_______"
-        major = "_______"
-        grad_class = "_______"
-        credits = "_______"
+        next if row.content == "\n \n"
 
-        student_attributes = {
-          :record_number => record_number,
-          :full_name => full_name,
-          :gwid => gwid,
-          :email_address => email_address,
-          :registration_status => registration_status, # **Web Registered**
-          :waitlist_position => waitlist_position,
-          :notification_expires => notification_expires,
-          :registration_number => registration_number,
-          :degree => degree, # B.B.A
-          :level => level, # Undergraduate
-          :program => program, # Honor's Program
-          :admit_term => admit_term, # Fall 2014
-          :admit_type => admit_type, # Freshman--Early Dec1
-          :catalog_term => catalog_term, # Fall 2014
-          :college => college, # School of Business
-          :campus => campus, # Main Campus
-          :major => major, # Pre-Business Administration
-          :grad_class => grad_class, # Sophomore
-          :credits => credits # 3.000
-        }
-        pp student_attributes
+        if row.content == "\nDegree\n"
+          degree_next = true
+          next
+        end
 
-        students << student_attributes
+
+        if degree_next == true
+          student.merge!({
+            :degree => row.content.strip, # B.B.A
+          })
+          degree_next = false
+          next
+        end
+
+        if row.content.include?("Level:")
+          student.merge!({
+            :level => row.content.gsub("Level:","").gsub("\n","").strip, # Undergraduate
+          })
+          next
+        end
+
+        if row.content.include?("Program:")
+          student.merge!({
+            :program => row.content.gsub("Program:","").gsub("\n","").strip, # Honor's Program
+          })
+          next
+        end
+
+        if row.content.include?("Admit Term:")
+          student.merge!({
+            :admit_term => row.content.gsub("Admit Term:","").gsub("\n","").strip, # Fall 2014
+          })
+          next
+        end
+
+        if row.content.include?("Admit Type:")
+          student.merge!({
+            :admit_type => row.content.gsub("Admit Type:","").gsub("\n","").strip, # Freshman--Early Dec1
+          })
+          next
+        end
+
+        if row.content.include?("Catalog Term:")
+          student.merge!({
+            :catalog_term => row.content.gsub("Catalog Term:","").gsub("\n","").strip, # Fall 2014
+          })
+          next
+        end
+
+        if row.content.include?("College:")
+          student.merge!({
+            :college => row.content.gsub("College:","").gsub("\n","").strip, # School of Business
+          })
+          next
+        end
+
+        if row.content.include?("Campus:")
+          student.merge!({
+            :campus => row.content.gsub("Campus:","").gsub("\n","").strip, # Main Campus
+          })
+          next
+        end
+
+        if row.content.include?("Major:")
+          student.merge!({
+            :major => row.content.gsub("Major:","").gsub("\n","").strip, # Pre-Business Administration
+          })
+          next
+        end
+
+        if row.content.include?("Class:")
+          student.merge!({
+            :grad_class => row.content.gsub("Class:","").gsub("\n","").strip, # Sophomore
+          })
+          next
+        end
+
+        if row.content.include?("Credits:")
+          student.merge!({
+            :credits => row.content.gsub("Credits:","").gsub("\n","").strip, # 3.000
+          })
+          save_next = true
+          next
+        end
+
+        if save_next == true
+          #raise StandardError unless student.keys == [:admit_term, :admit_type, :campus, :catalog_term, :college, :degree, :grad_class, :level, :major, :program]
+          pp student
+          students << student
+          next
+        end
+
+        ###[
+        ###  {:campus => "Campus:"}
+        ###].each do |k,v|
+        ###  if row.content.include?(k)
+        ###    student.merge!({
+        ###      k.to_sym => row.content.gsub(v,"").gsub("\n","").strip,
+        ###    })
+        ###    next
+        ###  end
+        ###end
+
+        #next
       end
 
       return students
