@@ -18,6 +18,14 @@ ruby script/generate_enrollment_reports.rb
 
 > This should produce a file for each course in the corresponding course directory: terms/`:term_id`/courses/`:course_id`/sections/`:section_id`/reports/enrollments.csv
 
+### Generate Student Report
+
+```` sh
+ruby script/generate_student_reports.rb
+````
+
+> This should produce a file for each course in the corresponding course directory: terms/`:term_id`/courses/`:course_id`/sections/`:section_id`/reports/students.csv
+
 ### Generate Student Address Report
 
 ```` sh
@@ -104,6 +112,7 @@ bundle install
 
 ```` sh
 ruby test/generate_enrollment_reports_test.rb
+ruby test/generate_student_reports_test.rb
 ruby test/generate_student_address_reports_test.rb
 ruby test/generate_student_transcript_reports_test.rb
 ````
