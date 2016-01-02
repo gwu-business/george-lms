@@ -3,6 +3,7 @@ require 'json'
 require 'nokogiri'
 require 'csv'
 require 'fileutils'
+#require 'active_support/core_ext/object/try'
 
 require_relative "term.rb"
 require_relative "course.rb"

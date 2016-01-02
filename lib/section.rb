@@ -203,103 +203,92 @@ module George
       return enrollments
     end
 
-
-
-
-
-
-
-
-
-
-
-
-
     def students
 
-      binding.pry
-=begin
       #
       # Get Data Table(s)
       #
 
-      document = Nokogiri::HTML(open(download_class_summary_path))
+      document = Nokogiri::HTML(open(download_class_details_path))
       tables = document.css("table")
       data_tables = tables.select{|t| t.attributes["class"] && t.attributes["class"].value == "datadisplaytable"}
-      #course_summary_table     = data_tables.find{|t| t.attributes["summary"] && t.attributes["summary"].value == "This table displays the attributes of the course." }
+      #course_summary_table = data_tables.find{|t| t.attributes["summary"] && t.attributes["summary"].value == "This table displays the attributes of the course." }
       #enrollment_summary_table = data_tables.find{|t| t.attributes["summary"] && t.attributes["summary"].value == "This table displays enrollment and waitlist counts." }
-      enrollments_table         = data_tables.find{|t| t.attributes["summary"] && t.attributes["summary"].value == "This table displays a list of students registered for the course; summary information about each student is provided." }
+      students_table = data_tables.find{|t| t.attributes["summary"] && t.attributes["summary"].value == "This table displays a list of students registered for the course; detailed information about each student is provided." }
 
       #
       # Parse Course Summary Table
       #
-
       # todo
 
       #
       # Parse Enrollment Summary Table
       #
-
       # todo
 
       #
-      # Parse Enrollments Table
+      # Parse Students Table
       #
 
-      enrollments = []
+      students = []
 
-      enrollment_rows = enrollments_table.css("tr")
+      student_rows = students_table.css("tr")
 
-      enrollment_rows.each_with_index do |enrollment, index|
-        next if index == 0 # ... skip the first row (headers) where enrollment.content == "\nRecordNumber\nWaitlist Position\nStudent Name\nID\nReg Status\nLevel\nCredits\nNotification Expires\n \n"
+      student_rows.each_with_index do |student_row, index|
+        next if index == 0 # skip the first row (headers) where student_row.content == "\nRecordNumber\nStudent Name\nID\nRegistration Status\nWaitlist Position\nNotification Expires\nRegistration Number\n \n"
 
-        # Get email link
+        summary_row = student_row.children.text.strip.split("\n")
+        email_link = student_row.css("a").find{|a| a.attributes["href"].value.include?("mailto:") }
 
-        email_link = enrollment.css("a").find{|a| a.attributes["href"].value.include?("mailto:") }
+        binding.pry if summary_row[1].nil?
 
-        # Parse email link
+        record_number = summary_row[0]
+        full_name = summary_row[1].strip
+        gwid = summary_row[2]
+        registration_status = summary_row[3].gsub("**","")
+        waitlist_position = summary_row[4]
+        notification_expires = summary_row[5]
+        registration_number = summary_row[6]
+        email_address = email_link.attributes["href"].value.gsub("mailto:","")
+        degree = "_______"
+        level = "_______"
+        program = "_______"
+        admit_term = "_______"
+        admit_type = "_______"
+        catalog_term = "_______"
+        college = "_______"
+        campus = "_______"
+        major = "_______"
+        grad_class = "_______"
+        credits = "_______"
 
-        student_email_address = email_link.attributes["href"].value.gsub("mailto:","") #net_id = email_address.gsub("@gwu.edu")
-        #student_net_id = student_email_address.gsub("@gwu.edu","")
-        student_full_name = email_link.attributes["target"].value
-
-        # Get table values
-
-        attribute_values = enrollment.children.text.strip.split("\n")
-
-        # Parse table values
-
-        record_number = attribute_values[0]
-        waitlist_position = attribute_values[1]
-        #student_name = attribute_values[2].strip
-        student_gwid = attribute_values[3]
-        registration_status = attribute_values[4].gsub("**","")
-        level = attribute_values[5]
-        credits = attribute_values[6].strip
-        notification_expires = attribute_values[7].strip
-
-        #first_name_middle_initial = student_name.split(",").last.strip
-        #last_name = student_name.split(",").first.strip
-
-        # Transform.
-
-        enrollment_attributes = {
-          :id => record_number,
+        student_attributes = {
+          :record_number => record_number,
+          :full_name => full_name,
+          :gwid => gwid,
+          :email_address => email_address,
+          :registration_status => registration_status, # **Web Registered**
           :waitlist_position => waitlist_position,
-          :student_gwid => student_gwid,
-          :student_email_address => student_email_address,
-          :student_full_name => student_full_name,
-          :registration_status => registration_status,
-          :student_level => level,
-          :credits => credits,
-          :notification_expires => notification_expires
+          :notification_expires => notification_expires,
+          :registration_number => registration_number,
+          :degree => degree, # B.B.A
+          :level => level, # Undergraduate
+          :program => program, # Honor's Program
+          :admit_term => admit_term, # Fall 2014
+          :admit_type => admit_type, # Freshman--Early Dec1
+          :catalog_term => catalog_term, # Fall 2014
+          :college => college, # School of Business
+          :campus => campus, # Main Campus
+          :major => major, # Pre-Business Administration
+          :grad_class => grad_class, # Sophomore
+          :credits => credits # 3.000
         }
+        pp student_attributes
 
-        enrollments << enrollment_attributes
+        students << student_attributes
       end
 
-      return enrollments
-=end
+      return students
     end
 
 
