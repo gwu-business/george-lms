@@ -230,17 +230,17 @@ module George
       # Parse Students Table
       #
 
-      students = [{:a => "fun", :b => "times"}]
+      students = []
       student = {}
       student_id = 0
       summary_next = false
       degree_next = false
+      save_next = false
       rows = students_table.css("tr")
       rows.each_with_index do |row, index|
-        pp student
+        #pp student
 
         if row.content == "\nRecordNumber\nStudent Name\nID\nRegistration Status\nWaitlist Position\nNotification Expires\nRegistration Number\n \n"
-          pp student.keys
           student = {} # reset / delete all student attributes, if any exist
           student_id+=1
           summary_next = true # expect the next row to contain student info
@@ -249,25 +249,22 @@ module George
           next
         end
 
-=begin
-
         if summary_next == true
           summary_row = row.children.text.strip.split("\n")
-          email_link = row.css("a").find{|a| a.attributes["href"].value.include?("mailto:")
+          email_link = row.css("a").find{|a| a.attributes["href"].value.include?("mailto:") }
           student.merge!({
             :record_number => summary_row[0],
             :full_name => summary_row[1].strip, # Student, Three C.
             :gwid => summary_row[2], # G1234567
             :registration_status => summary_row[3].gsub("**",""), # **Web Registered**
             :waitlist_position => summary_row[4],
-            :notification_expires => summary_row[5],
+            :notification_expires => summary_row[5].strip,
             :registration_number => summary_row[6],
             :email_address => email_link.attributes["href"].value.gsub("mailto:","") # student123@gwu.edu
           })
-          summary_next = false # reset
+          summary_next = false
+          next
         end
-
-=end
 
         next if row.content == "\n \n"
 
@@ -275,7 +272,6 @@ module George
           degree_next = true
           next
         end
-
 
         if degree_next == true
           student.merge!({
@@ -357,9 +353,10 @@ module George
         end
 
         if save_next == true
-          #raise StandardError unless student.keys == [:admit_term, :admit_type, :campus, :catalog_term, :college, :degree, :grad_class, :level, :major, :program]
+          raise KeyMismatchError.new(student.keys.sort) unless student.keys.sort == [:admit_term, :admit_type, :campus, :catalog_term, :college, :degree, :email_address, :full_name, :gwid, :level, :major, :notification_expires, :record_number, :registration_number, :registration_status, :waitlist_position]
           pp student
           students << student
+          save_next = false
           next
         end
 
@@ -380,6 +377,7 @@ module George
       return students
     end
 
+    class KeyMismatchError < StandardError ; end
 
 
 
