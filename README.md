@@ -30,7 +30,7 @@ Download **Detailed Class List**:
  * Select a *Course*. Submit selection.
  * View *Detail Class List*, and download source (html-only).
 
-> Save as: terms/`:term_id`/courses/`:course_id`/sections/`:section_id`/reports/class_details.html
+> Save as: terms/`:term_id`/courses/`:course_id`/sections/`:section_id`/downloads/class_details.html
 
 ## Contributing
 
