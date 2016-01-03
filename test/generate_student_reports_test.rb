@@ -4,15 +4,19 @@
 #
 
 require_relative "../lib/george.rb"
+test_results = []
 
-istm4121_student_report_path = File.join(George::TERMS_PATH, "201503", "courses", "istm-4121", "sections", "10", "reports", "students.csv")
+current_courses = George::Term.current.courses
+current_sections = current_courses.map{|course| course.sections }.flatten
+current_sections.each do |section|
+  report_path = section.student_report_path
+  pp report_path
+  FileUtils.rm_f(report_path)
 
-pp istm4121_student_report_path
+  section.generate_student_report
 
-FileUtils.rm_f(istm4121_student_report_path)
+  test_results << (File.exist?(report_path) ?  true : false) # expect the report file to exist
+  test_results << (IO.readlines(report_path).length >= 34 ? true : false) #todo: expect it to contain the expected number of students
+end
 
-system "ruby script/generate_student_reports.rb"
-
-passes_test = File.exist?(istm4121_student_report_path)
-
-puts "TEST PASSES? -- #{passes_test}"
+puts "TEST PASSES? -- #{test_results.uniq == [true]}"

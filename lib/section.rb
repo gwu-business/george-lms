@@ -178,6 +178,7 @@ module George
         registration_status = attribute_values[4].gsub("**","")
         level = attribute_values[5]
         credits = attribute_values[6].strip
+        #binding.pry
         notification_expires = attribute_values[7].strip
 
         #first_name_middle_initial = student_name.split(",").last.strip
@@ -202,6 +203,19 @@ module George
 
       return enrollments
     end
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     def students
 
@@ -232,33 +246,38 @@ module George
 
       students = []
       student = {}
-      student_id = 0
+      student_id = 1
       summary_next = false
       degree_next = false
       save_next = false
       rows = students_table.css("tr")
       rows.each_with_index do |row, index|
-        #pp student
-
         if row.content == "\nRecordNumber\nStudent Name\nID\nRegistration Status\nWaitlist Position\nNotification Expires\nRegistration Number\n \n"
-          student = {} # reset / delete all student attributes, if any exist
-          student_id+=1
-          summary_next = true # expect the next row to contain student info
           pp "-----------------"
-          pp "I: #{index}; S: #{student_id}"
+          pp "Row: #{index}; Student: #{student_id}"
+
+          unless student.empty?
+            pp "SAVING STUDENT --> #{student}"
+            students << student # write to memory
+            student_id+=1
+            student = {} # reset / delete all student attributes, if any exist
+          end
+
+          summary_next = true # expect the next row to contain student info
           next
         end
 
         if summary_next == true
-          summary_row = row.children.text.strip.split("\n")
+          summary_row = row.children.text.strip.split("\n") # ["1", "Student, Three C. ", "G1234567", "**Web Registered**", "0", " ", "8"]
           email_link = row.css("a").find{|a| a.attributes["href"].value.include?("mailto:") }
+
           student.merge!({
             :record_number => summary_row[0],
             :full_name => summary_row[1].strip, # Student, Three C.
             :gwid => summary_row[2], # G1234567
             :registration_status => summary_row[3].gsub("**",""), # **Web Registered**
             :waitlist_position => summary_row[4],
-            :notification_expires => summary_row[5].strip,
+            :notification_expires => summary_row[5].strip == " " ? nil : summary_row[5].strip, # " "
             :registration_number => summary_row[6],
             :email_address => email_link.attributes["href"].value.gsub("mailto:","") # student123@gwu.edu
           })
@@ -352,23 +371,13 @@ module George
           next
         end
 
-        if save_next == true
-          raise KeyMismatchError.new(student.keys.sort) unless student.keys.sort == [:admit_term, :admit_type, :campus, :catalog_term, :college, :degree, :email_address, :full_name, :gwid, :level, :major, :notification_expires, :record_number, :registration_number, :registration_status, :waitlist_position]
-          pp student
-          students << student
-          save_next = false
-          next
-        end
-
-        ###[
-        ###  {:campus => "Campus:"}
-        ###].each do |k,v|
-        ###  if row.content.include?(k)
-        ###    student.merge!({
-        ###      k.to_sym => row.content.gsub(v,"").gsub("\n","").strip,
-        ###    })
-        ###    next
-        ###  end
+        ###expected_student_keys = [:admit_term, :admit_type, :campus, :catalog_term, :college, :degree, :email_address, :full_name, :gwid, :level, :major, :notification_expires, :record_number, :registration_number, :registration_status, :waitlist_position]
+        ###if save_next == true
+        ###  #raise KeyMismatchError.new(expected_student_keys - student.keys) unless student.keys.sort = expected_student_keys.sort
+        ###  #binding.pry unless student.keys.sort = expected_student_keys.sort
+        ###  students << student
+        ###  save_next = false
+        ###  next
         ###end
 
         #next
@@ -377,7 +386,44 @@ module George
       return students
     end
 
+    ###[
+    ###  {:campus => "Campus:"}
+    ###].each do |k,v|
+    ###  if row.content.include?(k)
+    ###    student.merge!({
+    ###      k.to_sym => row.content.gsub(v,"").gsub("\n","").strip,
+    ###    })
+    ###    next
+    ###  end
+    ###end
+
     class KeyMismatchError < StandardError ; end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
