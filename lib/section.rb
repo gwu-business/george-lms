@@ -178,7 +178,7 @@ module George
 
 
 
-
+    # deprecated because #students gets all this info and more from the "detail report"
     def enrollments
 
       #
