@@ -73,6 +73,49 @@ module George
     ###  File.join(reports_path, "student_transcripts.csv")
     ###end
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     #
     # REPORT-GENERATION METHODS
     #
@@ -118,6 +161,23 @@ module George
     ###    end
     ###  end
     ###end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     def enrollments
 
@@ -245,7 +305,9 @@ module George
       #
 
       students = []
-      student = {}
+      student = {:majors => [], :minors => [], :program => nil}
+      #student = George::Student.new({})
+      #student = {}
       student_id = 1
       summary_next = false
       degree_next = false
@@ -256,11 +318,12 @@ module George
           pp "-----------------"
           pp "Row: #{index}; Student: #{student_id}"
 
-          unless student.empty?
+          unless student == {:majors => [], :minors => [], :program => nil}
+            student = student.sort.to_h # work-around to sort keys for consistent csv file writing
             pp "SAVING STUDENT --> #{student}"
             students << student # write to memory
             student_id+=1
-            student = {} # reset / delete all student attributes, if any exist
+            student = {:majors => [], :minors => [], :program => nil} # reset / delete all student attributes, if any exist
           end
 
           summary_next = true # expect the next row to contain student info
@@ -350,9 +413,17 @@ module George
         end
 
         if row.content.include?("Major:")
-          student.merge!({
-            :major => row.content.gsub("Major:","").gsub("\n","").strip, # Pre-Business Administration
-          })
+          student[:majors] << row.content.gsub("Major:","").gsub("\n","").strip # Pre-Business Administration
+          next
+        end
+
+        if row.content.include?("Major and Department:")
+          student[:majors] << row.content.gsub("Major and Department:","").gsub("\n","").strip # "Information Systems, InfSystemsTechnologyManagement" also "Systems Engineering, Engr Mgt & Systems Engineering"
+          next
+        end
+
+        if row.content.include?("Minor:")
+          student[:minors] << row.content.gsub("Minor:","").gsub("\n","").strip # Pre-Business Administration
           next
         end
 
