@@ -1,5 +1,5 @@
 #
-# to run from the root directory: `ruby lib/assign_groups.rb`
+# to run from the root directory: `ruby script/assign_groups.rb`
 #
 
 # count the number of enrolled students (fourty-ish)

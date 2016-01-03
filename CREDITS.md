@@ -11,3 +11,4 @@
    + http://www.rubydoc.info/github/sparklemotion/nokogiri/Nokogiri/XML/Element
    + http://stackoverflow.com/questions/4822422/output-array-to-csv-in-ruby
    + http://stackoverflow.com/a/15912856/670433
+   + https://practicingruby.com/articles/ways-to-load-code
