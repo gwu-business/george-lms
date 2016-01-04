@@ -487,24 +487,66 @@ module George
 
 
     def student_addresses
-      student_addresses = []
+      students_addresses = []
       html_files = Dir.entries(download_student_addresses_path) - [".","..",".gitignore"]
-      html_files.each_with_index do |html_file, index|
-        puts "#{index} -- #{html_file}"
+      html_files.each_with_index do |file_name, index|
+        file_path = File.join(download_student_addresses_path, file_name)
+        puts "#{index} -- #{file_path}"
 
-        ###document = Nokogiri::HTML(open(html_file))
-        ###tables = document.css("table")
-        ###address_and_phones_table = tables.find{|t| t.attributes["summary"] && t.attributes["summary"].value == "This table displays addresses and phones." }
-###
-###
-        ####data_tables = tables.select{|t| t.attributes["class"] && t.attributes["class"].value == "datadisplaytable"}
-###
-        ###binding.pry
-        ####student_name a.text where a.name = "Student Address"
-###
-###
-        ###rows = table.css("tr")
+        document = Nokogiri::HTML(open(file_path))
+        address_and_phones_table = document.css("table").find{ |t|
+          t.attributes["summary"] &&
+          t.attributes["summary"].value == "This table displays addresses and phones."
+        }
+        student = {:full_name => "John J. Student", :addresses => [], :phones => []}
+        current_address_phone_next = false
+        current_address_next = false
+        permanent_address_phone_next = false
+        permanent_address_next = false
+        rows = address_and_phones_table.css("tr")
+        rows.each do |row|
+          #pp row.content.split("\n")
+
+          if current_address_phone_next == true
+            current_address_primary_phone = row.content.split("\n").last.gsub("Primary: ","")
+            current_address_phone_next = false
+            current_address_phone_next = true
+            next
+          end
+
+          if current_address_next == true
+            pp row.css("td").select{|td| td.text == (" " || "\n") }.count
+            current_address = row.css("td").select{|td| td.text != (" " || "\n") }.first.text
+            current_address_next = false
+            next
+          end
+
+          next if row.content == "\n \n"
+
+          if permanent_address_phone_next == true
+            permanent_address_phone_next = false
+            permanent_address_primary_phone = row.content.split("\n").last.gsub("Primary: ","") # "None Provided"
+            permanent_address_phone_next = false
+            permanent_address_next = true
+            next
+          end
+
+          if permanent_address_next == true
+            pp row.css("td").select{|td| td.text == (" " || "\n") }.count
+            permanent_address = row.css("td").select{|td| td.text != (" " || "\n") }.first.text
+            permanent_address_next = false
+            next
+          end
+
+          current_address_phone_next = true if row.content == "\nCurrent\nPhones\n"
+          permanent_address_phone_next = true if row.content == "\nPermanent\nPhones\n"
+        end
+
+
       end
+
+
+
     end
 
 
