@@ -498,7 +498,10 @@ module George
           t.attributes["summary"] &&
           t.attributes["summary"].value == "This table displays addresses and phones."
         }
-        student_name = "John J. Student" #todo: get student_name
+        student_name = document.css("a").select{|a|
+          a.attributes["name"] &&
+          a.attributes["name"].value == "Student Address"
+        }.first.text || "John J. Student" #todo: get student_name
 
         student = {:full_name => student_name, :addresses => [], :phones => []}
         next_row = "N/A"
