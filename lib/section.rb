@@ -41,10 +41,10 @@ module George
       File.join(downloads_path, "class_details.html")
     end
 
-    ###def download_student_addresses_path
-    ###  File.join(downloads_path, "students", "addresses")
-    ###end
-###
+    def download_student_addresses_path
+      File.join(downloads_path, "students", "addresses")
+    end
+
     ###def download_student_transcripts_path
     ###  File.join(downloads_path, "students", "transcripts")
     ###end
@@ -65,10 +65,10 @@ module George
       File.join(reports_path, "students.csv")
     end
 
-    ###def student_address_report_path
-    ###  File.join(reports_path, "student_addresses.csv")
-    ###end
-###
+    def student_address_report_path
+      File.join(reports_path, "student_addresses.csv")
+    end
+
     ###def student_transcript_report_path
     ###  File.join(reports_path, "student_transcripts.csv")
     ###end
@@ -148,19 +148,19 @@ module George
       end
     end
 
-    ###def generate_student_address_report
-    ###  puts "GENERATING STUDENT ADDRESS REPORT FOR SECTION #{self.inspect}"
-###
-    ###  FileUtils.rm_f(student_address_report_path)
-###
-    ###  @student_addresses = self.student_addresses
-###
-    ###  CSV.open(student_address_report_path, "w", :write_headers=> true, :headers => @student_addresses.first.keys.map{|k| k.to_s}) do |csv|
-    ###    @student_addresses.each do |student_address_attributes|
-    ###      csv << student_address_attributes.values
-    ###    end
-    ###  end
-    ###end
+    def generate_student_address_report
+      puts "GENERATING STUDENT ADDRESS REPORT FOR SECTION #{self.inspect}"
+
+      FileUtils.rm_f(student_address_report_path)
+
+      @student_addresses = self.student_addresses
+
+      CSV.open(student_address_report_path, "w", :write_headers=> true, :headers => @student_addresses.first.keys.map{|k| k.to_s}) do |csv|
+        @student_addresses.each do |student_address_attributes|
+          csv << student_address_attributes.values
+        end
+      end
+    end
 
 
 
@@ -468,7 +468,7 @@ module George
     ###  end
     ###end
 
-    class KeyMismatchError < StandardError ; end
+    ###class KeyMismatchError < StandardError ; end
 
 
 
@@ -486,7 +486,26 @@ module George
 
 
 
+    def student_addresses
+      student_addresses = []
+      html_files = Dir.entries(download_student_addresses_path) - [".","..",".gitignore"]
+      html_files.each_with_index do |html_file, index|
+        puts "#{index} -- #{html_file}"
 
+        ###document = Nokogiri::HTML(open(html_file))
+        ###tables = document.css("table")
+        ###address_and_phones_table = tables.find{|t| t.attributes["summary"] && t.attributes["summary"].value == "This table displays addresses and phones." }
+###
+###
+        ####data_tables = tables.select{|t| t.attributes["class"] && t.attributes["class"].value == "datadisplaytable"}
+###
+        ###binding.pry
+        ####student_name a.text where a.name = "Student Address"
+###
+###
+        ###rows = table.css("tr")
+      end
+    end
 
 
 
