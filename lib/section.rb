@@ -487,7 +487,7 @@ module George
 
 
     def student_addresses
-      students_addresses = []
+      students = []
       html_files = Dir.entries(download_student_addresses_path) - [".","..",".gitignore"]
       html_files.each_with_index do |file_name, index|
         file_path = File.join(download_student_addresses_path, file_name)
@@ -498,55 +498,52 @@ module George
           t.attributes["summary"] &&
           t.attributes["summary"].value == "This table displays addresses and phones."
         }
-        student = {:full_name => "John J. Student", :addresses => [], :phones => []}
-        current_address_phone_next = false
-        current_address_next = false
-        permanent_address_phone_next = false
-        permanent_address_next = false
+        student_name = "John J. Student" #todo: get student_name
+
+        student = {:full_name => student_name, :addresses => [], :phones => []}
+        next_row = "N/A"
         rows = address_and_phones_table.css("tr")
         rows.each do |row|
-          #pp row.content.split("\n")
-
-          if current_address_phone_next == true
-            current_address_primary_phone = row.content.split("\n").last.gsub("Primary: ","")
-            current_address_phone_next = false
-            current_address_phone_next = true
+          case next_row
+          when "CurrentAddressPhone"
+            student[:phones] << {
+              :current_address => row.content.split("\n").last.gsub("Primary: ","")
+            }
+            next_row = "CurrentAddress"
+            next
+          when "CurrentAddress"
+            student[:addresses] << {
+              :current => row.css("td").select{|td| td.text != (" " || "\n") }.first.text
+            }
+            next_row = "N/A"
+            next
+          when "PermanentAddressPhone"
+            student[:phones] << {
+              :permanent_address => row.content.split("\n").last.gsub("Primary: ","")
+            }
+            next_row = "PermanentAddress"
+            next
+          when "PermanentAddress"
+            student[:addresses] << {
+              :permanent => row.css("td").select{|td| td.text != (" " || "\n") }.first.text
+            }
+            next_row = "N/A"
             next
           end
 
-          if current_address_next == true
-            pp row.css("td").select{|td| td.text == (" " || "\n") }.count
-            current_address = row.css("td").select{|td| td.text != (" " || "\n") }.first.text
-            current_address_next = false
-            next
-          end
+          #next if row.content == "\n \n"
 
-          next if row.content == "\n \n"
-
-          if permanent_address_phone_next == true
-            permanent_address_phone_next = false
-            permanent_address_primary_phone = row.content.split("\n").last.gsub("Primary: ","") # "None Provided"
-            permanent_address_phone_next = false
-            permanent_address_next = true
-            next
-          end
-
-          if permanent_address_next == true
-            pp row.css("td").select{|td| td.text == (" " || "\n") }.count
-            permanent_address = row.css("td").select{|td| td.text != (" " || "\n") }.first.text
-            permanent_address_next = false
-            next
-          end
-
-          current_address_phone_next = true if row.content == "\nCurrent\nPhones\n"
-          permanent_address_phone_next = true if row.content == "\nPermanent\nPhones\n"
+          next_row = "CurrentAddressPhone" if row.content == "\nCurrent\nPhones\n"
+          next_row = "PermanentAddressPhone" if row.content == "\nPermanent\nPhones\n"
+          #next_row = "CheckW4AddressPhone" if row.content == "\nCheck & W4 Address\nPhones\n"
+          #next_row = "CampusOfficePhone" if row.content == "\nCampus Office\nPhones\n"
         end
 
-
+        pp student
+        students << student
       end
 
-
-
+      return students
     end
 
 
