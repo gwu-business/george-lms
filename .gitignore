@@ -3,5 +3,4 @@ schedule_details.html
 class_summary.html
 class_details.html
 enrollments.csv
-*.csv
-*.html
+students.csv
